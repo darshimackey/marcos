@@ -1,0 +1,40 @@
+pipeline {
+    agent any
+    tools {
+        maven 'maven'
+    }
+    stages {
+        stage("pull src code from git") {
+            steps {
+               git 'https://github.com/darshimackey/marcos.git'
+            }
+        }
+        stage("prepare build"){
+            steps{
+                sh 'mvn clean package'
+            }
+        }
+        stage("copy *.war file"){
+            steps{
+                sh "mv target/marcos.war ."
+                sshPublisher(
+                continueOnError: false, 
+                failOnError: true,
+                publishers: [
+                    sshPublisherDesc(
+                        configName: "marcos",
+                        transfers: [
+                            sshTransfer(sourceFiles: "Dockerfile"),
+                            sshTransfer(sourceFiles: "marcos.war"),
+                            sshTransfer(execCommand: '''docker rm -f tomcat
+                                                        docker rmi marcos
+                                                        docker build -t marcos .    
+                                                        docker run -it -d --name tomcat -p 8081:8080 marcos'''),
+                        ]
+                    )
+                ]
+            )
+            }
+        }
+    }
+}
