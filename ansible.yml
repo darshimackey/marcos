@@ -8,10 +8,10 @@
   tasks:
 
     - name: Pull Docker image from Docker Hub
-      command: docker pull darshi0809/marcos
+      command: docker pull darshi0809/maarcos
 
     - name: Stop and remove existing container
       command: docker rm -f tomcat
 
     - name: Run new container
-      command: docker run -d --name tomcat -p 8080:8080 darshi0809/marcos
+      command: docker run -d --name tomcat -p 8080:8080 darshi0809/maarcos
