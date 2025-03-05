@@ -1,0 +1,16 @@
+- name: project deploy
+  hosts: dev
+  user: ansible
+  become: yes
+  connection: ssh
+  gather_facts: no
+  tasks:
+    - name: pull the docker image
+      command: docker pull darshi0809/marcos
+
+    - name: stop and delete existing conatiner
+      command: docker rm -f tomcat
+
+    - name:run container
+      command: docker run -it -d --name tomcat -p 8081:8080 marcos
+  
