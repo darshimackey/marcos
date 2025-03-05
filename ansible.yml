@@ -1,3 +1,4 @@
+---
 - name: project deploy
   hosts: dev
   user: ansible
@@ -11,6 +12,6 @@
     - name: stop and delete existing conatiner
       command: docker rm -f tomcat
 
-    - name:run container
+    - name: run container
       command: docker run -it -d --name tomcat -p 8081:8080 marcos
   
