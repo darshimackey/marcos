@@ -14,4 +14,4 @@
       command: docker rm -f tomcat
 
     - name: Run new container
-      command: docker run -d --name tomcat -p 8080:8080 darshi0809/maarcos
+      command: docker run -d --name tomcat -p 8081:8080 darshi0809/maarcos
